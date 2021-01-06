@@ -61,8 +61,10 @@ public class ImageGatheringOpMode extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
+    private DcMotor frontLeftDrive = null;
+    private DcMotor frontRightDrive = null;
+    private DcMotor backLeftDrive = null;
+    private DcMotor backRightDrive = null;
 
     int width = 320;
     int height = 240;
@@ -77,15 +79,19 @@ public class ImageGatheringOpMode extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "L");
-        rightDrive = hardwareMap.get(DcMotor.class, "R");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "FL");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "FR");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "BL");
+        backRightDrive = hardwareMap.get(DcMotor.class, "BR");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        // Wait for the game to start (driver presses PLAY)
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         // Connect to the camera
@@ -96,6 +102,7 @@ public class ImageGatheringOpMode extends LinearOpMode {
         // Remember to change the camera rotation
         phoneCam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
 
+        // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
@@ -103,18 +110,24 @@ public class ImageGatheringOpMode extends LinearOpMode {
         while (opModeIsActive()) {
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
-            double rightPower;
+            double frontLeftPower;
+            double frontRightPower;
+            double backLeftPower;
+            double backRightPower;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.left_stick_x;
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            double driveY = -gamepad1.left_stick_y;
+            double driveX = gamepad1.left_stick_x;
+            double turn  =  gamepad1.right_stick_x;
+            frontLeftPower    = Range.clip(driveY + driveX + turn, -1.0, 1.0) ;
+            frontRightPower   = Range.clip(driveY - driveX - turn, -1.0, 1.0) ;
+            backLeftPower    = Range.clip(driveY - driveX + turn, -1.0, 1.0) ;
+            backRightPower   = Range.clip(driveY + driveX - turn, -1.0, 1.0) ;
+
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -122,8 +135,11 @@ public class ImageGatheringOpMode extends LinearOpMode {
             // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
+            frontLeftDrive.setPower(frontLeftPower);
+            frontRightDrive.setPower(frontRightPower);
+            backLeftDrive.setPower(backLeftPower);
+            backRightDrive.setPower(backRightPower);
+
 
             if(gamepad1.a == true){
                 imageGatheringPipeline.saveFrame();
@@ -131,7 +147,7 @@ public class ImageGatheringOpMode extends LinearOpMode {
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
     }
