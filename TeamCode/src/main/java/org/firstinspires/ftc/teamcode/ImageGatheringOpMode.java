@@ -55,7 +55,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="ImageGathering", group="Linear Opmode")
 //@Disabled
 public class ImageGatheringOpMode extends LinearOpMode {
 
