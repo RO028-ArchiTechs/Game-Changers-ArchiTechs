@@ -93,6 +93,7 @@ public class test_001 extends RemoteDrive {
             double frontRightPower;
             double backLeftPower;
             double backRightPower;
+            double accPower;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -107,7 +108,7 @@ public class test_001 extends RemoteDrive {
             backLeftPower    = Range.clip(driveY - driveX + turn, -1.0, 1.0) ;
             backRightPower   = Range.clip(driveY + driveX - turn, -1.0, 1.0) ;
 
-
+            //test for commit
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
