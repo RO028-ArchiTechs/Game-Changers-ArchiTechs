@@ -100,7 +100,7 @@ public class ImageGatheringOpMode extends LinearOpMode {
         // processFrame() will be called to process the frame
         phoneCam.setPipeline(imageGatheringPipeline);
         // Remember to change the camera rotation
-        phoneCam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+        phoneCam.startStreaming(width, height);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
