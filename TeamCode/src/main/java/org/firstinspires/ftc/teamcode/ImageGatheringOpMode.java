@@ -96,7 +96,8 @@ public class ImageGatheringOpMode extends LinearOpMode {
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         // Connect to the camera
         phoneCam.openCameraDevice();
-        // Use the SkystoneDetector pipeline
+        // Use the imageGatheringPipelineDetector pipeline
+        imageGatheringPipeline = new ImageGatheringPipeline();
         // processFrame() will be called to process the frame
         phoneCam.setPipeline(imageGatheringPipeline);
         // Remember to change the camera rotation

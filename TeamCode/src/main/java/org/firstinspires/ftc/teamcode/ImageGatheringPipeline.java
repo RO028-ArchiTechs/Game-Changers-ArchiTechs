@@ -17,7 +17,7 @@ public class ImageGatheringPipeline extends OpenCvPipeline {
 
     public void saveFrame() {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        Imgcodecs.imwrite(dir + "/" + "input" + ".png", lastFrame);
+        Imgcodecs.imwrite(dir + "/" + timeStamp + ".png", lastFrame);
     }
 
     @Override
