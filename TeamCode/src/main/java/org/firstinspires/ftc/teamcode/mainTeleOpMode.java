@@ -29,18 +29,18 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 //@Disabled
 public class mainTeleOpMode extends LinearOpMode{
 
-    drivetrainMecanum drive           = new drivetrainMecanum();
-    private DcMotor Accelerator = null;
+    hardwareV01 hardware           = new hardwareV01();
+    //private DcMotor Accelerator = null;
 
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        drive.init(hardwareMap);
-        Accelerator  = hardwareMap.get(DcMotor.class, "ACC");
+        hardware.init(hardwareMap);
+        //Accelerator  = hardwareMap.get(DcMotor.class, "ACC");
 
-        Accelerator.setDirection(DcMotor.Direction.REVERSE);
+        //Accelerator.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -76,11 +76,11 @@ public class mainTeleOpMode extends LinearOpMode{
             // rightPower = -gamepad1.right_stick_y ;
 
             // Send calculated power to wheels
-            drive.FrontLeft.setPower(frontLeftPower);
-            drive.FrontRight.setPower(frontRightPower);
-            drive.BackLeft.setPower(backLeftPower);
-            drive.BackRight.setPower(backRightPower);
-            Accelerator.setPower(accPower);
+            hardware.FrontLeft.setPower(frontLeftPower);
+            hardware.FrontRight.setPower(frontRightPower);
+            hardware.BackLeft.setPower(backLeftPower);
+            hardware.BackRight.setPower(backRightPower);
+            hardware.Accelerator.setPower(accPower);
 
             // Show the elapsed game time and wheel power.
             //telemetry.addData("Status", "Run Time: " + runtime.toString());

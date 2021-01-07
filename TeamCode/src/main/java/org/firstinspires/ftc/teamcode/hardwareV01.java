@@ -24,7 +24,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class hardwareV01 extends drivetrainMecanum{
     /* Public OpMode members. */
     public DcMotor  Accelerator   = null;
-    /// TO BE CONTINUED ///
 
     //public Servo    leftClaw    = null;
     //public Servo    rightClaw   = null;
@@ -52,6 +51,9 @@ public class hardwareV01 extends drivetrainMecanum{
         FrontRight = hwMap.get(DcMotor.class, "FL");
         BackLeft  = hwMap.get(DcMotor.class, "BL");
         BackRight = hwMap.get(DcMotor.class, "BR");
+        Accelerator  = hwMap.get(DcMotor.class, "ACC");
+
+        Accelerator.setDirection(DcMotor.Direction.REVERSE);
         FrontLeft.setDirection(DcMotor.Direction.FORWARD);
         FrontRight.setDirection(DcMotor.Direction.REVERSE);
         BackLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -62,14 +64,14 @@ public class hardwareV01 extends drivetrainMecanum{
         FrontRight.setPower(0);
         BackLeft.setPower(0);
         BackRight.setPower(0);
-
+        Accelerator.setPower(0);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         FrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
+        Accelerator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         /*
         // Define and initialize ALL installed servos.
         leftClaw  = hwMap.get(Servo.class, "left_hand");
