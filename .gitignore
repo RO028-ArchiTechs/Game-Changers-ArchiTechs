@@ -51,6 +51,9 @@ captures/
 .idea/modules.xml
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
+# S[-mi bga pula daca stiu la ce-i buna chestia asta ... mi-o aparut ca ceva de genu sigur nu vrei un free trial pt functia asta ? si gen n-aveam buton de nu mersi
+.idea/markdown-navigator.xml
+.idea/markdown-navigator-enh.xml
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
