@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -25,7 +26,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @TeleOp(name="MAIN", group="drivetrain")
-@Disabled
+//@Disabled
 public class mainTeleOpMode extends LinearOpMode{
 
     drivetrainMecanum drive           = new drivetrainMecanum();
@@ -38,6 +39,8 @@ public class mainTeleOpMode extends LinearOpMode{
 
         drive.init(hardwareMap);
         Accelerator  = hardwareMap.get(DcMotor.class, "ACC");
+
+        Accelerator.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
