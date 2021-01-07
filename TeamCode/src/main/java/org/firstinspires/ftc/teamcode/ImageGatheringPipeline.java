@@ -14,6 +14,12 @@ public class ImageGatheringPipeline extends OpenCvPipeline {
     protected final static String dir = Environment.getExternalStorageDirectory().getPath() + "/" + "FIRST_" + "/" + "Images";//save state working directory
     Mat lastFrame = null;
 
+    ImageGatheringPipeline(){
+        super();
+        File directory = new File(dir);//create directory object
+        directory.mkdir();//create the working directory
+    }
+
     public void saveFrame() {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
         if(lastFrame != null) {
