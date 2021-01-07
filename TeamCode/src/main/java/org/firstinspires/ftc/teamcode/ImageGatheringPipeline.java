@@ -14,14 +14,18 @@ public class ImageGatheringPipeline extends OpenCvPipeline {
     protected final static String dir = Environment.getExternalStorageDirectory().getPath() + "/" + "FIRST_" + "/" + "Images";//save state working directory
     Mat lastFrame = null;
 
-
     public void saveFrame() {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        Imgcodecs.imwrite(dir + "/" + timeStamp + ".png", lastFrame);
+        if(lastFrame != null) {
+            Imgcodecs.imwrite(dir + "/" + timeStamp + ".png", lastFrame);
+        }
     }
 
     @Override
     public Mat processFrame(Mat input) {
+        if(this.lastFrame == null){
+            this.lastFrame = new Mat(input.rows(),input.cols(),input.type());
+        }
         input.copyTo(this.lastFrame);
         return input;
     }
