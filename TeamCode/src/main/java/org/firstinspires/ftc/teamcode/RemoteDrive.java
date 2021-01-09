@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -72,7 +73,8 @@ public class RemoteDrive extends LinearOpMode {
                         byte[] buffer = new byte[1024];
                         DatagramPacket response = new DatagramPacket(buffer, buffer.length);
                         socket.receive(response);
-                        gamepadAction = new String(buffer, 0, response.getLength());
+                        gamepadAction = new String(buffer, 0, response.getLength());///this needs to be decoded
+                        new String(buffer,0,response.getLength(), StandardCharsets.UTF_8);
                     } catch (Exception ignore) {
                         ///TODO idk wtf to do here
                     }
