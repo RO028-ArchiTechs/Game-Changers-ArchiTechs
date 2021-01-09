@@ -79,7 +79,6 @@ public class RemoteDrive extends LinearOpMode {
                         socket.receive(response);
                         gamepadAction = new String(buffer,0,response.getLength(), StandardCharsets.UTF_8);
                         Log.d("THREAD","received " + gamepadAction);
-                        telemetry.clear();
                         telemetry.addData("received ",gamepadAction);
                         telemetry.update();
                     } catch (Exception e) {
