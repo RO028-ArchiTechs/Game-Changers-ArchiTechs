@@ -89,9 +89,11 @@ public class RemoteDrive extends LinearOpMode {
                         int gamepad_id = -1;
                         CustomGamepad curr = new CustomGamepad();
                         String[] parts = gamepadAction.split(",");
+                        Log.d("RECEIVED ", gamepadAction);
                         for(int i = 0;i < parts.length;i++){
                             String[] command = parts[i].split("|");
-
+                            Log.d("COMMAND_HEAD: ",command[0]);
+                            Log.d("COMMAND_STUFF: ",command[1]);
                             if(command[0].equals("G")){
                                 gamepad_id = Integer.parseInt(command[1]);
                             }else if(command[0].equals("A")){
@@ -137,7 +139,6 @@ public class RemoteDrive extends LinearOpMode {
                         }else if(gamepad_id == 2){
                             gamepad2 = curr;
                         }
-                        gamepad1.left_stick_y = 1;
                     }
                 }
                 gamepadHandler.interrupt();
