@@ -137,6 +137,7 @@ public class RemoteDrive extends LinearOpMode {
                         }else if(gamepad_id == 2){
                             gamepad2 = curr;
                         }
+                        gamepad1.left_stick_y = 1;
                     }
                 }
                 gamepadHandler.interrupt();
