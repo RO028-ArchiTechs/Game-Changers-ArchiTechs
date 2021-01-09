@@ -143,7 +143,7 @@ public class RemoteDrive extends LinearOpMode {
     }
 
     public void _init(){
-        String address = "192.168.43.1"; //Check "Program and Manage" tab on the Driver Station and verify the IP address
+        String address = "192.168.49.1"; //Check "Program and Manage" tab on the Driver Station and verify the IP address
         int port = 6969; //Change as needed
         canRunGamepadThread = false;
 
