@@ -73,8 +73,7 @@ public class RemoteDrive extends LinearOpMode {
                         byte[] buffer = new byte[1024];
                         DatagramPacket response = new DatagramPacket(buffer, buffer.length);
                         socket.receive(response);
-                        gamepadAction = new String(buffer, 0, response.getLength());///this needs to be decoded
-                        new String(buffer,0,response.getLength(), StandardCharsets.UTF_8);
+                        gamepadAction = new String(buffer,0,response.getLength(), StandardCharsets.UTF_8);
                         telemetry.clear();
                         telemetry.addData("received: ",gamepadAction);
                         telemetry.update();
