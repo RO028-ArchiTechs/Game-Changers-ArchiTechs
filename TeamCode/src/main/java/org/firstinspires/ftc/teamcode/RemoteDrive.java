@@ -143,6 +143,8 @@ public class RemoteDrive extends LinearOpMode {
     }
 
     public void _init(){
+        this.gamepad1 = new CustomGamepad();
+        this.gamepad2 = new CustomGamepad();
         String address = "192.168.49.1"; //Check "Program and Manage" tab on the Driver Station and verify the IP address
         int port = 6969; //Change as needed
         canRunGamepadThread = false;
@@ -156,11 +158,10 @@ public class RemoteDrive extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Connect your server to " + address + ":" + port, "");
         telemetry.update();
+    }
 
-        waitForStart();
-
+    public void after_start(){
         canRunGamepadThread = true;
-
         startGamepadHandlerThread();
     }
 
