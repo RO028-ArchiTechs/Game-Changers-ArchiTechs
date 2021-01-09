@@ -63,7 +63,7 @@ public class RemoteDrive extends LinearOpMode {
 
 
     private void startGamepadHandlerThread() {
-        telemetry.setAutoClear(true);
+        //telemetry.setAutoClear(true);
         gamepadHandler = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -75,8 +75,13 @@ public class RemoteDrive extends LinearOpMode {
                         socket.receive(response);
                         gamepadAction = new String(buffer, 0, response.getLength());///this needs to be decoded
                         new String(buffer,0,response.getLength(), StandardCharsets.UTF_8);
-                    } catch (Exception ignore) {
-                        ///TODO idk wtf to do here
+                        telemetry.clear();
+                        telemetry.addData("received: ",gamepadAction);
+                        telemetry.update();
+                    } catch (Exception e) {
+                        telemetry.clear();
+                        telemetry.addData("Error: ",e.getMessage());
+                        telemetry.update();
                     }
 
                     if(gamepadAction.isEmpty() == false){
