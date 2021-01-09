@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -53,6 +55,7 @@ import java.nio.charset.StandardCharsets;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+@TeleOp(name="RemoteDriveTest", group="Linear Opmode")
 //@Disabled
 public class RemoteDrive extends LinearOpMode {
 
@@ -69,18 +72,15 @@ public class RemoteDrive extends LinearOpMode {
             public void run() {
                 while (canRunGamepadThread) {
                     String gamepadAction = "";
+                    Log.d("THREAD","ok, awaiting message");
                     try {
                         byte[] buffer = new byte[1024];
                         DatagramPacket response = new DatagramPacket(buffer, buffer.length);
                         socket.receive(response);
                         gamepadAction = new String(buffer,0,response.getLength(), StandardCharsets.UTF_8);
-                        telemetry.clear();
-                        telemetry.addData("received: ",gamepadAction);
-                        telemetry.update();
+                        Log.d("THREAD","received " + gamepadAction);
                     } catch (Exception e) {
-                        telemetry.clear();
-                        telemetry.addData("Error: ",e.getMessage());
-                        telemetry.update();
+                        Log.d("EXCEPTION",e.getMessage());
                     }
 
                     if(gamepadAction.isEmpty() == false){
@@ -156,20 +156,22 @@ public class RemoteDrive extends LinearOpMode {
         try {
             this.socket = new DatagramSocket(port);
         } catch (Exception ex) {
-            telemetry.addData("Exception: ", ex.getMessage());
+            Log.d("EXCEPTION",ex.getMessage());
         }
 
-        telemetry.addData("Status", "Initialized");
-        telemetry.addData("Connect your server to " + address + ":" + port, "");
+        Log.d("INIT","Initialized");
+        Log.d("INIT","Connect your server to " + address + ":" + port);
         telemetry.update();
     }
 
     public void after_start(){
+        Log.d("START","this just started");
         canRunGamepadThread = true;
         startGamepadHandlerThread();
     }
 
     public void _end(){
+        Log.d("END","teleop ended");
         canRunGamepadThread = false;
         socket.close();
     }
@@ -179,6 +181,7 @@ public class RemoteDrive extends LinearOpMode {
     public void runOpMode(){
         this._init();
         waitForStart();
+        this.after_start();
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 ;
