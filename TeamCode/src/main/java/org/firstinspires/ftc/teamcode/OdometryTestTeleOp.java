@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -51,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
 //@Disabled
-public class test_001 extends LinearOpMode {
+public class OdometryTestTeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -59,6 +60,34 @@ public class test_001 extends LinearOpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
+
+    private DcMotor leftOmni = null;
+    private DcMotor rightOmni = null;
+    private DcMotor backOmni = null;
+
+    private int l_position = 0;
+    private int r_position = 0;
+    private int b_position = 0;
+
+    private OdometricSolver solver;
+
+    private void resetTicks(){
+        l_position = leftOmni.getCurrentPosition();
+        r_position = rightOmni.getCurrentPosition();
+        b_position = backOmni.getCurrentPosition();
+    }
+
+    public int getLeftTicks() {
+        return leftOmni.getCurrentPosition() - l_position;
+    }
+
+    public int getRightTicks() {
+        return rightOmni.getCurrentPosition() - r_position;
+    }
+
+    public int getBackTicks() {
+        return backOmni.getCurrentPosition() - b_position;
+    }
 
     @Override
     public void runOpMode() {
@@ -73,6 +102,13 @@ public class test_001 extends LinearOpMode {
         backLeftDrive = hardwareMap.get(DcMotor.class, "BL");
         backRightDrive = hardwareMap.get(DcMotor.class, "BR");
 
+        leftOmni = hardwareMap.get(DcMotor.class, "FL");
+        rightOmni = hardwareMap.get(DcMotor.class, "FR");
+        backOmni = hardwareMap.get(DcMotor.class, "BL");
+        leftOmni.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightOmni.setDirection(DcMotorSimple.Direction.REVERSE);
+        backOmni.setDirection(DcMotorSimple.Direction.REVERSE);
+        resetTicks();
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -119,8 +155,14 @@ public class test_001 extends LinearOpMode {
             backLeftDrive.setPower(backLeftPower);
             backRightDrive.setPower(backRightPower);
 
+            resetTicks();
+            solver.update_ticks(getLeftTicks(),getRightTicks(),getBackTicks());
+
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("x: ", String.valueOf(solver.get_x()));
+            telemetry.addData("y: ", String.valueOf(solver.get_y()));
+            telemetry.addData("theta: ", String.valueOf(solver.get_theta()));
             // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
