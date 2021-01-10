@@ -28,7 +28,7 @@ public class OdometricSolver {
                 dx = 0;
                 dy = (l + r) / 2;
             }else{
-                dt = (l + r) / (L_DISTANCE + R_DISTANCE);
+                dt = (r) / (R_DISTANCE);
                 dx = 0;
                 dy = 0;
             }
@@ -50,8 +50,8 @@ public class OdometricSolver {
         dy += back_strafe * Math.sin(dt);
 
         double a_dx,a_dy;///absolute change
-        a_dx = dx * Math.cos(dt) -  dy * Math.sin(dt);
-        a_dy = dx * Math.sin(dt) + dy * Math.cos(dt);
+        a_dx = dx * Math.cos(dt) -  dy * Math.sin(theta);
+        a_dy = dx * Math.sin(dt) + dy * Math.cos(theta);
 
         x += a_dx;
         y += a_dy;
