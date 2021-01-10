@@ -91,7 +91,7 @@ public class RemoteDrive extends LinearOpMode {
                         String[] parts = gamepadAction.split(",");
                         Log.d("RECEIVED ", gamepadAction);
                         for(int i = 0;i < parts.length;i++){
-                            String[] command = parts[i].split("|");
+                            String[] command = parts[i].split("~");
                             Log.d("COMMAND_HEAD: ",command[0]);
                             Log.d("COMMAND_STUFF: ",command[1]);
                             if(command[0].equals("G")){
