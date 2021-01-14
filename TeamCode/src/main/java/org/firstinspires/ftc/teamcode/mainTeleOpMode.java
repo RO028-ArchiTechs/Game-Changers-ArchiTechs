@@ -30,6 +30,7 @@ public class mainTeleOpMode extends RemoteDrive{
 
     @Override
     public void runOpMode() {
+        super._init();
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -40,6 +41,7 @@ public class mainTeleOpMode extends RemoteDrive{
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+        super.after_start();
         //runtime.reset();
 
         // run until the end of the match (driver presses STOP)
@@ -83,5 +85,6 @@ public class mainTeleOpMode extends RemoteDrive{
             // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
+        super._end();
     }
 }
