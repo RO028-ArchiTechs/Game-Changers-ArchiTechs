@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * This is NOT an opmode.
@@ -23,10 +23,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class HardwareV01 extends drivetrainMecanum{
     /* Public OpMode members. */
-    public DcMotor  Accelerator   = null;
+    public DcMotor accelerator = null;
 
-    //public Servo    leftClaw    = null;
-    //public Servo    rightClaw   = null;
+    public Servo loadServo    = null;
 
 
     /* local OpMode members. */
@@ -35,13 +34,20 @@ public class HardwareV01 extends drivetrainMecanum{
     /* Constructor */
     public HardwareV01(HardwareMap ahwMap){
         super(ahwMap);
-        Accelerator  = hwMap.get(DcMotor.class, "ACC");
 
-        Accelerator.setDirection(DcMotor.Direction.REVERSE);
 
-        Accelerator.setPower(0);
 
-        Accelerator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        accelerator = hwMap.get(DcMotor.class, "ACC");
+
+        accelerator.setDirection(DcMotor.Direction.REVERSE);
+
+        accelerator.setPower(0);
+
+        accelerator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        loadServo = hwMap.get(Servo.class,"LOAD");
+
+        loadServo.setPosition(0.5);
     }
 
     /* Initialize standard Hardware interfaces */

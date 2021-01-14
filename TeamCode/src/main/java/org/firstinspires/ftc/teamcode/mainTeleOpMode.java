@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
@@ -78,7 +77,13 @@ public class mainTeleOpMode extends RemoteDrive{
             hardware.FrontRight.setPower(frontRightPower);
             hardware.BackLeft.setPower(backLeftPower);
             hardware.BackRight.setPower(backRightPower);
-            hardware.Accelerator.setPower(accPower);
+            hardware.accelerator.setPower(accPower);
+
+            if(gamepad1.a == true){
+                hardware.loadServo.setPosition(0.5 + 0.1);
+            }else{
+                hardware.loadServo.setPosition(0.5);
+            }
 
             // Show the elapsed game time and wheel power.
             //telemetry.addData("Status", "Run Time: " + runtime.toString());
