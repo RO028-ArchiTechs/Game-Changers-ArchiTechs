@@ -1,15 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 /// TO BE REMOVED AND WRITTEN NICLEY ///
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -29,7 +25,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 //@Disabled
 public class mainTeleOpMode extends LinearOpMode{
 
-    hardwareV01 hardware           = new hardwareV01();
+    HardwareV01 hardware           = null;
     //private DcMotor Accelerator = null;
 
     @Override
@@ -37,7 +33,7 @@ public class mainTeleOpMode extends LinearOpMode{
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        hardware.init(hardwareMap);
+        hardware=new HardwareV01(hardwareMap);
         //Accelerator  = hardwareMap.get(DcMotor.class, "ACC");
 
         //Accelerator.setDirection(DcMotor.Direction.REVERSE);

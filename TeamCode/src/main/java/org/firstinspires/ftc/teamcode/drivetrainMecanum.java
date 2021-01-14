@@ -42,13 +42,8 @@ public class drivetrainMecanum {
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public drivetrainMecanum(){
-
-    }
-
-    /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
+    public drivetrainMecanum(HardwareMap ahwMap){
+    // Save reference to Hardware map
         hwMap = ahwMap;
 
         // Define and Initialize Motors
@@ -82,4 +77,5 @@ public class drivetrainMecanum {
         rightClaw.setPosition(MID_SERVO);
          */
     }
+
 }
