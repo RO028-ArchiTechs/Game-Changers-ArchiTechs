@@ -23,7 +23,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="MAIN", group="drivetrain")
 //@Disabled
-public class mainTeleOpMode extends LinearOpMode{
+public class mainTeleOpMode extends RemoteDrive{
 
     HardwareV01 hardware           = null;
     //private DcMotor Accelerator = null;
