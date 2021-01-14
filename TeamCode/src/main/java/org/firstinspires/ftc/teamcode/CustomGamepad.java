@@ -19,6 +19,11 @@ public class CustomGamepad {
     double left_stick_y;
     double right_stick_x;
     double right_stick_y;
+
+    boolean back;
+    boolean start;
+    boolean guide;
+
     CustomGamepad() {
         a = false;
         b = false;
@@ -38,5 +43,8 @@ public class CustomGamepad {
         left_stick_y = 0;
         right_stick_x = 0;
         right_stick_y = 0;
+        back = false;
+        start = false;
+        guide = false;
     }
 }

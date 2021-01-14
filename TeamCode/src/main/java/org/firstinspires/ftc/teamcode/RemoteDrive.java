@@ -132,6 +132,12 @@ public class RemoteDrive extends LinearOpMode {
                                 curr.right_stick_x = Double.parseDouble(command[1]);
                             }else if(command[0].equals("R_Y")){
                                 curr.right_stick_y = Double.parseDouble(command[1]);
+                            }else if(command[0].equals("BACK")){
+                                curr.back = (Integer.parseInt(command[1]) == 1);
+                            }else if(command[0].equals("START")){
+                                curr.start = (Integer.parseInt(command[1]) == 1);
+                            }else if(command[0].equals("GUIDE")){
+                                curr.guide = (Integer.parseInt(command[1]) == 1);
                             }
                         }
                         if(gamepad_id == 1){
