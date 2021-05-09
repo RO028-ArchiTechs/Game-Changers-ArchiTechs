@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
 @Disabled
-public class test_001 extends RemoteDrive {
+public class test_001 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -63,7 +63,6 @@ public class test_001 extends RemoteDrive {
 
     @Override
     public void runOpMode() {
-        super._init();
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -84,7 +83,6 @@ public class test_001 extends RemoteDrive {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        super.after_start();
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
@@ -127,6 +125,5 @@ public class test_001 extends RemoteDrive {
             // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             //telemetry.update();
         }
-        super._end();
     }
 }
