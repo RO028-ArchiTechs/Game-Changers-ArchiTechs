@@ -26,27 +26,27 @@ public class InputSaveState extends SaveState{
 
         //reads the values in the same order that and OutputSaveState object would write them
         in.update();
-        left_stick_y = in.getDouble();
-        left_stick_x = in.getDouble();
-        right_stick_y = in.getDouble();
-        right_stick_x = in.getDouble();
-        direction = in.getDouble();
-        red = in.getDouble();
-        green = in.getDouble();
-        blue = in.getDouble();
-        a = in.getBoolean();
-        b = in.getBoolean();
-        x = in.getBoolean();
-        y = in.getBoolean();
-        dpad_up = in.getBoolean();
-        dpad_down = in.getBoolean();
-        distance = in.getDouble();
-        time = in.getDouble();
-        left_bumper = in.getBoolean();
-        left_trigger = in.getDouble();
-        dpad_left = in.getBoolean();
-        dpad_right = in.getBoolean();
-        right_bumper = in.getBoolean();
-        right_trigger = in.getDouble();
+        left_stick_y = (in.isDisabled() ? 0:in.getDouble());
+        left_stick_x = (in.isDisabled() ? 0:in.getDouble());
+        right_stick_y = (in.isDisabled() ? 0:in.getDouble());
+        right_stick_x = (in.isDisabled() ? 0:in.getDouble());
+        direction = (in.isDisabled() ? 0:in.getDouble());
+        red = (in.isDisabled() ? 0:in.getDouble());
+        green = (in.isDisabled() ? 0:in.getDouble());
+        blue = (in.isDisabled() ? 0:in.getDouble());
+        a = (in.isDisabled() ? false:in.getBoolean());
+        b = (in.isDisabled() ? false:in.getBoolean());
+        x = (in.isDisabled() ? false:in.getBoolean());
+        y = (in.isDisabled() ? false:in.getBoolean());
+        dpad_up = (in.isDisabled() ? false:in.getBoolean());
+        dpad_down = (in.isDisabled() ? false:in.getBoolean());
+        distance = (in.isDisabled() ? 0:in.getDouble());
+        time = (in.isDisabled() ? 0:in.getDouble());
+        left_bumper = (in.isDisabled() ? false:in.getBoolean());
+        left_trigger = (in.isDisabled() ? 0:in.getDouble());//TODO
+        dpad_left = (in.isDisabled() ? false:in.getBoolean());
+        dpad_right = (in.isDisabled() ? false:in.getBoolean());
+        right_bumper = (in.isDisabled() ? false:in.getBoolean());
+        right_trigger = (in.isDisabled() ? 0:in.getDouble());//TODO
     }
 }
