@@ -31,9 +31,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
 /**
@@ -49,7 +55,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="ImageGathering", group="Linear Opmode")
 //@Disabled
 public class test_001 extends LinearOpMode {
 
@@ -59,6 +65,11 @@ public class test_001 extends LinearOpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
+
+    int width = 320;
+    int height = 240;
+    StartDetectingPipeline startDetectingPipeline;
+    OpenCvCamera phoneCam;
 
     @Override
     public void runOpMode() {
@@ -80,6 +91,18 @@ public class test_001 extends LinearOpMode {
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
 
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        // Connect to the camera
+        phoneCam.openCameraDevice();
+        // Use the imageGatheringPipelineDetector pipeline
+        startDetectingPipeline = new StartDetectingPipeline();
+        // processFrame() will be called to process the frame
+        phoneCam.setPipeline(startDetectingPipeline);
+        // Remember to change the camera rotation
+        phoneCam.startStreaming(width, height);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -92,7 +115,6 @@ public class test_001 extends LinearOpMode {
             double frontRightPower;
             double backLeftPower;
             double backRightPower;
-            double accPower;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -107,7 +129,7 @@ public class test_001 extends LinearOpMode {
             backLeftPower    = Range.clip(driveY - driveX + turn, -1.0, 1.0) ;
             backRightPower   = Range.clip(driveY + driveX - turn, -1.0, 1.0) ;
 
-            //test for commit
+
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
             // leftPower  = -gamepad1.left_stick_y ;
