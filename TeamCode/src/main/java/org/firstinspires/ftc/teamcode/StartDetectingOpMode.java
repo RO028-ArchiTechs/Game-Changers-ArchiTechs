@@ -55,9 +55,9 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="ImageGathering", group="Linear Opmode")
+@TeleOp(name="StartDetectingOpMode", group="Linear Opmode")
 //@Disabled
-public class test_001 extends LinearOpMode {
+public class StartDetectingOpMode extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -104,7 +104,15 @@ public class test_001 extends LinearOpMode {
         phoneCam.startStreaming(width, height);
 
         // Wait for the game to start (driver presses PLAY)
+
+        while(isStarted() == false){
+            ;
+        }
+
+        int state = startDetectingPipeline.get_state();
+
         waitForStart();
+        phoneCam.stopStreaming();
         runtime.reset();
 
         // run until the end of the match (driver presses STOP)
@@ -143,6 +151,7 @@ public class test_001 extends LinearOpMode {
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("state is", Integer.toString(state));
             // telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
         }
