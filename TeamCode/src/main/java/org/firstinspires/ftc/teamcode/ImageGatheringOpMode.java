@@ -32,9 +32,15 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
 /**
@@ -50,9 +56,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="ImageGathering", group="Linear Opmode")
 //@Disabled
-public class test_001 extends LinearOpMode {
+public class ImageGatheringOpMode extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -60,6 +66,11 @@ public class test_001 extends LinearOpMode {
     private DcMotor frontRightDrive = null;
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
+
+    int width = 320;
+    int height = 240;
+    ImageGatheringPipeline imageGatheringPipeline;
+    OpenCvCamera phoneCam;
 
     @Override
     public void runOpMode() {
@@ -80,6 +91,18 @@ public class test_001 extends LinearOpMode {
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
+
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        // Connect to the camera
+        phoneCam.openCameraDevice();
+        // Use the imageGatheringPipelineDetector pipeline
+        imageGatheringPipeline = new ImageGatheringPipeline();
+        // processFrame() will be called to process the frame
+        phoneCam.setPipeline(imageGatheringPipeline);
+        // Remember to change the camera rotation
+        phoneCam.startStreaming(width, height);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -119,6 +142,11 @@ public class test_001 extends LinearOpMode {
             frontRightDrive.setPower(frontRightPower);
             backLeftDrive.setPower(backLeftPower);
             backRightDrive.setPower(backRightPower);
+
+
+            if(gamepad1.a == true){
+                imageGatheringPipeline.saveFrame();
+            }
 
             // Show the elapsed game time and wheel power.
             //telemetry.addData("Status", "Run Time: " + runtime.toString());
